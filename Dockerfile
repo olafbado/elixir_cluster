@@ -1,11 +1,17 @@
 ARG ELIXIR_VERSION=1.18.3
 ARG OTP_VERSION=27
+ARG MIX_ENV=prod
+ARG IMAGE=elixir:${ELIXIR_VERSION}-otp-${OTP_VERSION}-slim
 
 # BUILD
 
-FROM elixir:${ELIXIR_VERSION}-otp-${OTP_VERSION}-slim AS builder
+FROM ${IMAGE} AS builder
 
-ENV MIX_ENV=prod
+RUN apt-get update -y && apt-get install ca-certificates -y
+RUN apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+ARG MIX_ENV
+ENV MIX_ENV=${MIX_ENV}
 
 WORKDIR /app
 
@@ -14,9 +20,6 @@ COPY mix.lock ./
 COPY config ./config
 COPY lib ./lib
 
-RUN apt-get update -y
-RUN apt-get install ca-certificates -y
-
 RUN mix deps.get
 RUN mix compile
 
@@ -24,14 +27,15 @@ RUN mix release
 
 # RUNTIME
 
-FROM elixir:${ELIXIR_VERSION}-otp-${OTP_VERSION}-slim
+FROM ${IMAGE} AS runner
+
+RUN apt-get update -y && apt-get install ca-certificates -y
+RUN apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 WORKDIR /app
 
-ENV MIX_ENV=prod
-
-RUN apt-get update -y
-RUN apt-get install ca-certificates -y
+ARG MIX_ENV
+ENV MIX_ENV=${MIX_ENV}
 
 COPY --from=builder /app/_build/${MIX_ENV}/rel/cluster_demo ./
 
