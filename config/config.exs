@@ -1,10 +1,3 @@
 import Config
 
-if config_env() == :dev do
-  config :libcluster,
-    topologies: [
-      local_gossip: [
-        strategy: Cluster.Strategy.Gossip
-      ]
-    ]
-end
+import_config "#{config_env()}.exs"
