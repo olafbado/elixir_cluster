@@ -24,3 +24,28 @@ cluster_demo-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+
+# Terraform plan output
+*.tfplan
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Local Terraform working dir
+.terraform/
+.terraform.lock.hcl
+
+# Editor/OS specific files
+*.swp
+*.bak
+*.tmp
+.DS_Store
+.idea/
+.vscode/
