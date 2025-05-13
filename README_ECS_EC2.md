@@ -4,11 +4,11 @@
 1. Build docker image !!! REMEMBER ABOUT ARCH, USE DOCKERX IF NEEDED !!!
 `docker build -t <image_name> .`
 2. Tag docker image
-`docker tag <image_name>:latest 387343693864.dkr.ecr.<region>.amazonaws.com/<image_name>:latest`
+`docker tag <image_name>:latest <ecr_id>.dkr.ecr.<region>.amazonaws.com/<image_name>:latest`
 3. Login to ECR
-`aws ecr get-login-password --profile <profile> --region <region> | docker login --username AWS --password-stdin 387343693864.dkr.ecr.<region>.amazonaws.com`
+`aws ecr get-login-password --profile <profile> --region <region> | docker login --username AWS --password-stdin <ecr_id>.dkr.ecr.<region>.amazonaws.com`
 4. Push image to ECT
-`docker push 387343693864.dkr.ecr.<region>.amazonaws.com/<image_name>:latest`
+`docker push <ecr_id>.dkr.ecr.<region>.amazonaws.com/<image_name>:latest`
 5. Create ECS cluster with EC2 type (remember about correct instance type so it has sufficient cpu and ram!)
 6. Create `Task Definition` with docker image → then Create Service and launch tasks
 
