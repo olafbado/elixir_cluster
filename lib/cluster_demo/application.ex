@@ -8,7 +8,7 @@ defmodule ClusterDemo.Application do
     topologies = Application.get_env(:libcluster, :topologies)
 
     children = [
-      {Cluster.Supervisor, [topologies, [name: MyApp.ClusterSupervisor]]}
+      {Cluster.Supervisor, [topologies, [name: ClusterDemo.ClusterSupervisor]]}
     ]
 
     opts = [strategy: :one_for_one, name: ClusterDemo.Supervisor]
