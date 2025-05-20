@@ -8,9 +8,8 @@ config :libcluster,
         polling_interval: 5_000,
         # <service_name>.<namespace>
         query: "elixir_cluster.elixir_cluster",
-        # set by the RELEASE_NODE env var
+        # on the left of @
         node_basename: "elixir_cluster",
-        record_type: :a
       ]
     ]
   ]
